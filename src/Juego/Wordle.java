@@ -1,14 +1,15 @@
 package Juego;
 
-import java.util.Random;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 
 public class Wordle {
 	
 	private char[] charsDePalabraSecreta;	// > Array con chars de la palabra
 	private String palabraSecretaElegida; 	// > Palabra Secreta
-	private HashMap<Character, Integer> repeticionesDeChars; // > Diccionario con char repetidos las veces que lo estan en palabra < 
+	private Map<Character, Integer> repeticionesDeChars; // > Diccionario con char repetidos las veces que lo estan en palabra < 
 	
 		
 	/**
@@ -27,7 +28,8 @@ public class Wordle {
 		charsDePalabraSecreta = arrayDeCharsDePalabraSecreta(palabraSecretaElegida);
 		
 		// > Rellenar el HashMap si hay chars repetidos en la palabra.
-		rellenarMapConCharRepetidos();
+		//rellenarMapConCharRepetidos();
+		
 		
 	}
 	
@@ -65,17 +67,17 @@ public class Wordle {
 	
 	// > Rellena el diccionario con chars repetidos de palabraSecretaElegida si los hay y cuantas veces.
 	// > Sin test
+	// > Sin funcionar
 	private void rellenarMapConCharRepetidos()
 	{
 		char caracterRepetido;
 		int cantidadDeVecesCharRepetido;
 		
-		for(int i = 0; i < 5;i++)
-			if(estaRepetidoChar(charsDePalabraSecreta[i])) 
+		for(char c: charsDePalabraSecreta)
+			if(estaRepetidoChar(c)) 
 			{
-				caracterRepetido = charsDePalabraSecreta[i];
+				caracterRepetido = c;
 				cantidadDeVecesCharRepetido = cantidadDeVecesCharRepetido(caracterRepetido);
-				repeticionesDeChars.put(caracterRepetido, cantidadDeVecesCharRepetido);
 			}
 		
 	}
