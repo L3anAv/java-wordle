@@ -59,6 +59,12 @@ public class Wordle {
 		return caracteres;
 	}
 	
+	// > Rellena el diccionario con chars repetidos si los hay y cuantas veces.
+	private HashMap<Character,Integer> darMapConCharRepetidos()
+	{
+		// BORRAR
+		return null;
+	}
 	
 	// > Comprueba si char c esta en la misma posicion que en la palabraSecretaElegida
 	public boolean estaCharEnMismaPosEnPalabraSecreta(char c, int posicion) 
