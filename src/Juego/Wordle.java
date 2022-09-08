@@ -28,8 +28,7 @@ public class Wordle {
 		charsDePalabraSecreta = arrayDeCharsDePalabraSecreta(palabraSecretaElegida);
 		
 		// > Rellenar el HashMap si hay chars repetidos en la palabra.
-		//rellenarMapConCharRepetidos();
-		
+		Map<Character, Integer> repeticionesDeChars = new HashMap<>();
 		
 	}
 	
@@ -67,20 +66,10 @@ public class Wordle {
 	
 	// > Rellena el diccionario con chars repetidos de palabraSecretaElegida si los hay y cuantas veces.
 	// > Sin test
-	// > Sin funcionar
-	private void rellenarMapConCharRepetidos()
-	{
-		char caracterRepetido;
-		int cantidadDeVecesCharRepetido;
-		
-		for(char c: charsDePalabraSecreta)
-			if(estaRepetidoChar(c)) 
-			{
-				caracterRepetido = c;
-				cantidadDeVecesCharRepetido = cantidadDeVecesCharRepetido(caracterRepetido);
-			}
-		
+	public void rellenarDiccionarConCharRepetidos() {
+		repeticionesDeChars.put('c', 12);
 	}
+	
 	
 	// > Devuelve true si hay char repetidos en la palabra
 	// > Sin test
