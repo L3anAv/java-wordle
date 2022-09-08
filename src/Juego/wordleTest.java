@@ -30,7 +30,7 @@ public class wordleTest {
 	}
 	
 	@Test
-	public void testestaCharEnMismaPosEnPalabraSecretaTrue() 
+	public void testEstaCharEnMismaPosEnPalabraSecretaTrue() 
 	{
 		palabraSecreta = wordle.getpalabraSecretaElegida();
 		char caracterPrimero = palabraSecreta.charAt(0);
@@ -39,7 +39,7 @@ public class wordleTest {
 	}
 	
 	@Test
-	public void testestaCharEnMismaPosEnPalabraSecretaFalse() 
+	public void testEstaCharEnMismaPosEnPalabraSecretaFalse() 
 	{
 		palabraSecreta = wordle.getpalabraSecretaElegida();
 		char caracterPrimero = palabraSecreta.charAt(0);
@@ -47,5 +47,22 @@ public class wordleTest {
 		
 	}
 	
+	@Test
+	public void testExisteCharEnPalabraSecretaTrue() 
+	{
+		palabraSecreta = wordle.getpalabraSecretaElegida();
+		char caracterElegido = palabraSecreta.charAt(4);
+		assertTrue(wordle.existeCharEnPalabraSecreta(caracterElegido));
+		
+	}
+	
+	@Test
+	public void tesExisteCharEnPalabraSecretaFalse() 
+	{
+		
+		wordle.setpalabraSecretaElegida("Casas");
+		assertFalse(wordle.existeCharEnPalabraSecreta('x'));
+		
+	}
 	
 }
