@@ -6,13 +6,9 @@ import java.util.HashMap;
 
 public class Wordle {
 	
-	/**
-	 * > Diccionario con char repetidos las veces que lo estan en palabra < 
-	 **/
-	
-	private char[] charsDePalabraSecreta;	// Array con chars de la palabra
-	private String palabraSecretaElegida; 	// Palabra Secreta
-	private HashMap<Character, Integer> repeticionesDeChars; 
+	private char[] charsDePalabraSecreta;	// > Array con chars de la palabra
+	private String palabraSecretaElegida; 	// > Palabra Secreta
+	private HashMap<Character, Integer> repeticionesDeChars; // > Diccionario con char repetidos las veces que lo estan en palabra < 
 	
 		
 	/**
@@ -23,17 +19,16 @@ public class Wordle {
 							 "fumar", "freno", "guiso", "gusto", "guapo", "huevo", "hotel", "jugar", "jarra", "garra"};
 		
 		
-		//Inciando lo necesario para el juego
+		// > Inciando lo necesario para el juego.
 		int numeroAleatorio = darUnNumeroParaSeleccionPalabra(palabras.length);
 		palabraSecretaElegida = palabras[numeroAleatorio].toLowerCase();
 		
-		//Obtener el array de chars de palabra secreta
+		// > Rellenar el array con los chars de palabra secreta elegida.
 		charsDePalabraSecreta = arrayDeCharsDePalabraSecreta(palabraSecretaElegida);
 		
 	}
 	
-	
-	//Declara si se gano el juego o no
+	// > Declara si se gano el juego o no
 	public boolean ganado(String palabraUsuario) 
 	{
 		
@@ -43,7 +38,7 @@ public class Wordle {
 		return false;
 	}
 	
-	//Da un numero aleatorio entre 0 y cantidad de palabras del array palabras.
+	// > Da un numero aleatorio entre 0 y cantidad de palabras del array palabras.
 	private int darUnNumeroParaSeleccionPalabra(int cantidadDePalabras) 
 	{
 		
@@ -53,7 +48,7 @@ public class Wordle {
 		return numero;
 	}
 	
-	//Crea un array que contiene en cada posicion un char de la palabraSecretaElegida
+	// > Crea un array que contiene en cada posicion un char de la palabraSecretaElegida
 	private char[] arrayDeCharsDePalabraSecreta(String palabra) 
 	{
 		char[] caracteres = new char[5];
@@ -65,7 +60,7 @@ public class Wordle {
 	}
 	
 	
-	//Comprueba si char c esta en la misma posicion que en la palabraSecretaElegida
+	// > Comprueba si char c esta en la misma posicion que en la palabraSecretaElegida
 	public boolean estaCharEnMismaPosEnPalabraSecreta(char c, int posicion) 
 	{
 		boolean existeCharEnMismaPos = false;
@@ -76,10 +71,11 @@ public class Wordle {
 		return existeCharEnMismaPos;
 	}
 	
-	//Si char pertenece a la palabra sin importa la posicion.
-	
-	// --> Tener en cuenta cuantas veces esta repetida esa letra en la palabra podria dar que existe y marcar de 
-	// amarillo una letra que no existe tantas veces en la palabraSecretaElegida.
+		
+	// > Tener en cuenta cuantas veces esta repetida esa letra en la palabra, se podria dar que existe 
+	// y marcar de  amarillo una letra que no existe tantas veces en la palabraSecretaElegida.
+
+	// > Si char pertenece a la palabra sin importa la posicion.
 	public boolean existeCharEnPalabraSecreta(char c)
 	{
 		int i = 0;
@@ -95,6 +91,7 @@ public class Wordle {
 		return existeCharEnPalabraSecreta;
 	}
 	
+	// > Getters y Setters
 	public void setpalabraSecretaElegida(String palabra) {
 		this.palabraSecretaElegida = palabra;
 	}
