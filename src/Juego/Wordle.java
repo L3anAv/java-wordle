@@ -26,6 +26,9 @@ public class Wordle {
 		// > Rellenar el array con los chars de palabra secreta elegida.
 		charsDePalabraSecreta = arrayDeCharsDePalabraSecreta(palabraSecretaElegida);
 		
+		// > Rellenar el HashMap si hay chars repetidos en la palabra.
+		rellenarMapConCharRepetidos();
+		
 	}
 	
 	// > Declara si se gano el juego o no
@@ -49,6 +52,7 @@ public class Wordle {
 	}
 	
 	// > Crea un array que contiene en cada posicion un char de la palabraSecretaElegida
+	// > Sin test
 	private char[] arrayDeCharsDePalabraSecreta(String palabra) 
 	{
 		char[] caracteres = new char[5];
@@ -59,12 +63,50 @@ public class Wordle {
 		return caracteres;
 	}
 	
-	// > Rellena el diccionario con chars repetidos si los hay y cuantas veces.
-	private HashMap<Character,Integer> darMapConCharRepetidos()
+	// > Rellena el diccionario con chars repetidos de palabraSecretaElegida si los hay y cuantas veces.
+	// > Sin test
+	private void rellenarMapConCharRepetidos()
 	{
-		// BORRAR
-		return null;
+		char caracterRepetido;
+		int cantidadDeVecesCharRepetido;
+		
+		for(int i = 0; i < 5;i++)
+			if(estaRepetidoChar(charsDePalabraSecreta[i])) 
+			{
+				caracterRepetido = charsDePalabraSecreta[i];
+				cantidadDeVecesCharRepetido = cantidadDeVecesCharRepetido(caracterRepetido);
+				repeticionesDeChars.put(caracterRepetido, cantidadDeVecesCharRepetido);
+			}
+		
 	}
+	
+	// > Devuelve true si hay char repetidos en la palabra
+	// > Sin test
+	public boolean estaRepetidoChar(char c) 
+	{
+		int i = 0;
+		boolean estaRepetidoChar = false;
+		
+		while(!estaRepetidoChar && i < 5)
+			if(charsDePalabraSecreta[i] == c)
+				estaRepetidoChar = true;
+			
+		return estaRepetidoChar;
+	}
+	
+	// > Devuelve la cantidad de veces que el char esta repetido
+	// > Sin test
+	public int cantidadDeVecesCharRepetido(char c) 
+	{
+		int cantidadDeVeces = 0;
+		
+		for(int i = 0; i < charsDePalabraSecreta.length; i++)
+			if(charsDePalabraSecreta[i] == c)
+				cantidadDeVeces++;
+		
+		return cantidadDeVeces;
+	}
+	
 	
 	// > Comprueba si char c esta en la misma posicion que en la palabraSecretaElegida
 	public boolean estaCharEnMismaPosEnPalabraSecreta(char c, int posicion) 
