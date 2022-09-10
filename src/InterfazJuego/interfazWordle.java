@@ -183,10 +183,9 @@ public class interfazWordle {
 						String charIngresado = cuadrosDeTexto[posicion].getText();
 						cuadrosDeTexto[posicion].setText(charIngresado);
 					}
-					else if(cuadrosDeTexto[posicion].getText().length() == 1) 
-					{
-						e.consume();
-					}
+					
+					
+					
 						
 					
 						
