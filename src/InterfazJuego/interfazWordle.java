@@ -165,22 +165,31 @@ public class interfazWordle {
 			int posicion = i;
 			localizacionX += 46;
 			
-			//Eventos de Fiedls
-			
-/** Consultar profes: Si escribo 
- * cuando ya hay algo me lo capta para
- * la palabra y me lo agrega en la ultima posicion. 
- * Esto solo presiono cuando ya hay alguna letra. Como la reemplazo?
- **/
+			//Eventos de para cada field
 			cuadrosDeTexto[i].addKeyListener(new KeyAdapter(){
 				
 				@Override
 				public void keyTyped(KeyEvent e) 
 				{
 					
-					if(cuadrosDeTexto[posicion].getText().length() >= 1)
+					if(cuadrosDeTexto[posicion].getText().length() == 0) 
+					{
+						String charIngresado = cuadrosDeTexto[posicion].getText();
+						cuadrosDeTexto[posicion].setText(charIngresado);
+					}
+					else if(cuadrosDeTexto[posicion].getText().length() == 1) 
+					{
+						cuadrosDeTexto[posicion].setText("");
+						String charIngresado = cuadrosDeTexto[posicion].getText();
+						cuadrosDeTexto[posicion].setText(charIngresado);
+					}
+					else if(cuadrosDeTexto[posicion].getText().length() == 1) 
+					{
 						e.consume();
+					}
+						
 					
+						
 				}
 				
 				@Override
@@ -195,7 +204,7 @@ public class interfazWordle {
 					if(cuadrosDeTexto[posicion].getText().length() >= 1) 
 					{
 						palabra = obtenerPalabraCompleta(e.getKeyChar(), posicion);
-						
+						System.out.println(palabra);
 					
 					}
 					
