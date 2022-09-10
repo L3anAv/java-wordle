@@ -183,11 +183,7 @@ public class interfazWordle {
 						String charIngresado = cuadrosDeTexto[posicion].getText();
 						cuadrosDeTexto[posicion].setText(charIngresado);
 					}
-					
-					
-					
-						
-					
+
 						
 				}
 				
@@ -203,7 +199,6 @@ public class interfazWordle {
 					if(cuadrosDeTexto[posicion].getText().length() >= 1) 
 					{
 						palabra = obtenerPalabraCompleta(e.getKeyChar(), posicion);
-						System.out.println(palabra);
 					
 					}
 					

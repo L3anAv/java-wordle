@@ -21,14 +21,15 @@ public class Wordle {
 		
 		
 		// > Inciando lo necesario para el juego.
-		int numeroAleatorio = darUnNumeroParaSeleccionPalabra(palabras.length);
-		palabraSecretaElegida = palabras[numeroAleatorio].toLowerCase();
+		int numeroAleatorio = darUnNumeroParaSeleccionPalabra(palabras.length-1);
+		palabraSecretaElegida = palabras[1].toLowerCase();
 		
 		// > Rellenar el array con los chars de palabra secreta elegida.
 		charsDePalabraSecreta = arrayDeCharsDePalabraSecreta(palabraSecretaElegida);
 		
 		// > Rellenar el HashMap si hay chars repetidos en la palabra.
-		//Map<Character, Integer> repeticionesDeChars = new HashMap<>();
+		repeticionesDeChars = rellenarDiccionarConCharRepetidos();
+		System.out.println("\n" + repeticionesDeChars.toString());
 		
 	}
 	
@@ -67,22 +68,44 @@ public class Wordle {
 	// > Rellena el diccionario con chars repetidos de palabraSecretaElegida si los hay y cuantas veces.
 	// > Sin test
 	
-//	public void rellenarDiccionarConCharRepetidos() {
-//		repeticionesDeChars.put('c', 12);
-//	}
+	public Map<Character, Integer> rellenarDiccionarConCharRepetidos() {
+		
+		Map<Character, Integer> repeticionesDeChars = new HashMap<>();
+		Character caracter;
+		Integer numeroDeVeces;
+		
+		for(int i = 0; i < charsDePalabraSecreta.length;i++) 
+		{
+			
+			if(estaRepetidoChar(charsDePalabraSecreta[i])) 
+			{
+				
+				caracter = charsDePalabraSecreta[i];
+				numeroDeVeces = cantidadDeVecesCharRepetido(caracter);
+				
+				System.out.println(caracter + " " + numeroDeVeces + "\n");
+				repeticionesDeChars.put(caracter, numeroDeVeces);
+				
+			}
+		}
+		
+		//repeticionesDeChars.put('c', 12);
+		
+		return repeticionesDeChars;
+		
+	}
 	
 	
 	// > Devuelve true si hay char repetidos en la palabra
 	// > Sin test
 	public boolean estaRepetidoChar(char c) 
 	{
-		int i = 0;
+		
 		boolean estaRepetidoChar = false;
 		
-		while(!estaRepetidoChar && i < 5)
-			if(charsDePalabraSecreta[i] == c)
-				estaRepetidoChar = true;
-			
+		if(cantidadDeVecesCharRepetido(c) >= 2)
+			estaRepetidoChar = true;
+
 		return estaRepetidoChar;
 	}
 	
