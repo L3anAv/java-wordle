@@ -11,8 +11,13 @@ public class Wordle {
 	private String palabraSecretaElegida; 	// > Palabra Secreta
 	private Map<Character, Integer> repeticionesDeChars; // > Diccionario con char repetidos las veces que lo estan en palabra < 
 	
-		
+	
 	/**
+	 * > caso de evaluacion
+	 * "anana" 
+	 * "lacra"
+	 * 
+	 * 
 	 * Constructor Wordle
 	 * */
 	public Wordle(){
@@ -22,14 +27,14 @@ public class Wordle {
 		
 		// > Inciando lo necesario para el juego.
 		int numeroAleatorio = darUnNumeroParaSeleccionPalabra(palabras.length-1);
-		palabraSecretaElegida = palabras[1].toLowerCase();
+		palabraSecretaElegida = palabras[numeroAleatorio].toLowerCase();
 		
 		// > Rellenar el array con los chars de palabra secreta elegida.
 		charsDePalabraSecreta = arrayDeCharsDePalabraSecreta(palabraSecretaElegida);
 		
 		// > Rellenar el HashMap si hay chars repetidos en la palabra.
 		repeticionesDeChars = rellenarDiccionarConCharRepetidos();
-		System.out.println("\n" + repeticionesDeChars.toString());
+		//System.out.println("\n" + repeticionesDeChars.toString());
 		
 	}
 	
@@ -68,7 +73,7 @@ public class Wordle {
 	// > Rellena el diccionario con chars repetidos de palabraSecretaElegida si los hay y cuantas veces.
 	// > Sin test
 	
-	public Map<Character, Integer> rellenarDiccionarConCharRepetidos() {
+	private Map<Character, Integer> rellenarDiccionarConCharRepetidos() {
 		
 		Map<Character, Integer> repeticionesDeChars = new HashMap<>();
 		Character caracter;
@@ -98,7 +103,7 @@ public class Wordle {
 	
 	// > Devuelve true si hay char repetidos en la palabra
 	// > Sin test
-	public boolean estaRepetidoChar(char c) 
+	private boolean estaRepetidoChar(char c) 
 	{
 		
 		boolean estaRepetidoChar = false;
@@ -111,7 +116,7 @@ public class Wordle {
 	
 	// > Devuelve la cantidad de veces que el char esta repetido
 	// > Sin test
-	public int cantidadDeVecesCharRepetido(char c) 
+	private int cantidadDeVecesCharRepetido(char c) 
 	{
 		int cantidadDeVeces = 0;
 		

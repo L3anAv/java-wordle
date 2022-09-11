@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
@@ -14,13 +15,16 @@ import Juego.Wordle;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class interfazWordle {
 
 	private JFrame frame;
-	private String palabra;
-	private StringBuilder palabraCompleta;
-
+	private int intentos;
+	private String palabraCompleta;
+	private StringBuilder palabraObtenida;
+	private ArrayList<JTextField[]> arrayListDeJTextFields;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -49,6 +53,8 @@ public class interfazWordle {
 	 */
 	private void initialize() {
 		
+// ---> ARREGLAR QUE SI LE DOY INTENTAR CON LOS FIELDS VACIOS SE ROMPE EL PROGRAMA. SOLUCIONAR. <----
+		
 		//Inicializando Frame
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(36, 31, 49));
@@ -56,69 +62,140 @@ public class interfazWordle {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		//Inicializando StringBuilder
-		palabraCompleta = new StringBuilder();
-		
-		//Instanciando el juego
+		//Instanciando el juego.
 		Wordle wordle = new Wordle();
-	
-// --> Cuadros para ingresar texto
-
-/** Colores segun corresponda de fondo para fields: 		
-* VERDE: new Color(96, 181, 90
-* AMARILLO: new Color(219, 193, 44)
-	**/
 		
-		//Variables comunes
-		int localizacionXFila = 115;
+		//Inicializando StringBuilder.
+		palabraObtenida = new StringBuilder();
 		
-		//Parametros para la primer fila de fields
-		int localizacionYFila1 = 38;
-		JTextField[] cuadrosDeTextoFila1 = new JTextField[5];
+		//Palabra Seleccionado
+		System.out.println(wordle.getpalabraSecretaElegida());
+ 		
+		//
+		JLabel GanasteTexto = new JLabel("Ganaste!");
+		GanasteTexto.setFont(new Font("Dialog", Font.PLAIN, 14));
+		GanasteTexto.setForeground(new Color(255, 255, 255));
+		GanasteTexto.setBounds(194, 236, 100, 17);
+		GanasteTexto.setVisible(false);
 		
-		//Parametros para la segunda fila de fields
-		int localizacionYFila2 = 78;
-		JTextField[] cuadrosDeTextoFila2 = new JTextField[5];
+		//
+		JLabel PerdisteTexto = new JLabel("Perdiste!");
+		PerdisteTexto.setFont(new Font("Dialog", Font.PLAIN, 14));
+		PerdisteTexto.setForeground(new Color(255, 255, 255));
+		PerdisteTexto.setBounds(194, 236, 100, 17);
+		PerdisteTexto.setVisible(false);
 		
-		//Parametros para la tecera fila de fields
-		int localizacionYFila3 = 118;
-		JTextField[] cuadrosDeTextoFila3 = new JTextField[5];
+// --> Insertando cuadros de texto en la interfaz.
 		
-		//Parametros para la cuarta fila de fields
-		int localizacionYFila4 = 158;
-		JTextField[] cuadrosDeTextoFila4 = new JTextField[5];
+		//InsertarFields en ArrayList
+ 		arrayListDeJTextFields = crearFieldsDeInterfaz();
 		
-		//Parametros para la quinta fila de fields
-		int localizacionYFila5 = 198;
-		JTextField[] cuadrosDeTextoFila5 = new JTextField[5];
+		// > Variables constantes
+			int localizacionYFila = 38;
+			int localizacionXFila = 115;
 		
-		//Inicializando JTextField
-		insertarFieldsEnInterfaz(cuadrosDeTextoFila1, localizacionXFila, localizacionYFila1);
-		insertarFieldsEnInterfaz(cuadrosDeTextoFila2, localizacionXFila, localizacionYFila2);
-		insertarFieldsEnInterfaz(cuadrosDeTextoFila3, localizacionXFila, localizacionYFila3);
-		insertarFieldsEnInterfaz(cuadrosDeTextoFila4, localizacionXFila, localizacionYFila4);
-		insertarFieldsEnInterfaz(cuadrosDeTextoFila5, localizacionXFila, localizacionYFila5);
+		// > Insertando en intefaz cada fila de JTextFields --> METODO
+		insertarFieldsEnInterfaz(arrayListDeJTextFields, localizacionXFila, localizacionYFila);
 		
-		//Inicializando boton
+// --> Boton de la interfaz
+		
+		// > Incializando boton
 		JButton btnNewButton = new JButton("INTENTAR");
+		
+		// > Seteando propiedades
 		btnNewButton.setBounds(118, 256, 210, 34);
 		
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		// > Seteando intentos
+		intentos = 0;
+		
+	/** Colores segun corresponda de fondo para fields: 		
+	* VERDE: new Color(96, 181, 90)
+	* AMARILLO: new Color(219, 193, 44)
+		**/		
+		
+		// > Eventos del boton
+		btnNewButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				System.out.println(intentos);
+				
+				if(!wordle.ganado(palabraCompleta) && palabraCompleta.length() == 5) 
+				{
+					
+					JTextField[] cuadrosDeTextoFila = arrayListDeJTextFields.get(intentos);
+					comprobarPalabraIngresada(palabraCompleta, wordle, cuadrosDeTextoFila);
+				
+				}else
+				{
+					JTextField[] cuadrosDeTextoFila = arrayListDeJTextFields.get(intentos);
+					interfazHasGanado(cuadrosDeTextoFila);
+					
+					//Ganaste
+					GanasteTexto.setVisible(true);
+				}
+				
+				//Control de intentos
+				if(intentos < 4)
+				{
+					intentos++;
+				}else {
+					PerdisteTexto.setVisible(true);
+				}
+				
 				
 			}
 		});
 		
-		
-		
-		//Evento boton
-		
-		
 		//Ingresando boton en frame
 		frame.getContentPane().add(btnNewButton);
 		
+		//Ingresando Label
+		frame.getContentPane().add(GanasteTexto);
+		frame.getContentPane().add(PerdisteTexto);
 	}
+	
+	// > asdasd
+	private void interfazHasGanado(JTextField[] cuadrosDeTextoFila)
+	{
+		for(int i = 0; i < palabraCompleta.length(); i ++) 
+		{
+				cuadrosDeTextoFila[i].setBackground(new Color(96, 181, 90));
+		}
+		
+	}
+	
+	// > asdasd
+	private ArrayList<JTextField[]> crearFieldsDeInterfaz() 
+	{
+		// > Inicializacion del arrayList de JTextFields.
+		 ArrayList<JTextField[]> arrayListDeJTextFields = new ArrayList<JTextField[]>();
+		 
+		// > Rellenando posiciones del arrayListDeJTextFields.
+		for(int i = 0; i < 5; i++)
+		{
+			JTextField[] cuadrosDeTextoFila = new JTextField[5];
+			arrayListDeJTextFields.add(cuadrosDeTextoFila);
 
+		}
+		
+		return arrayListDeJTextFields;
+	}
+	
+	// -->
+	private void insertarFieldsEnInterfaz(ArrayList<JTextField[]> arrayListDeJTextFields, int localizacionXFila, int localizacionYFila) 
+	{
+		
+		for(int i = 0; i < arrayListDeJTextFields.size(); i++) 
+		{
+			JTextField[] cuadrosDeTextoFila = arrayListDeJTextFields.get(i);
+	
+			colocacionDeFieldsEnInterfaz(cuadrosDeTextoFila, localizacionXFila, localizacionYFila);
+			localizacionYFila += 40;
+			
+		}
+		
+	}
 	
 	//Funcion que obtiene la palabra caracter a caracter y la concateca con un StringBuilder
 	private String obtenerPalabraCompleta(char caracterIngresado, int index)
@@ -127,22 +204,49 @@ public class interfazWordle {
 		// Si la palabra tiene 5 caracteres empieza a reemplazar en la pos correspondiente
 		// si no concatena.
 		
-		if(palabraCompleta.length() == 5) 
-			palabraCompleta.setCharAt(index, caracterIngresado);
+		if(palabraObtenida.length() == 5) 
+			palabraObtenida.setCharAt(index, caracterIngresado);
 		else 
-			palabraCompleta.append(caracterIngresado);
+			palabraObtenida.append(caracterIngresado);
 		
-		return palabraCompleta.toString().toLowerCase();
+		return palabraObtenida.toString().toLowerCase();
 	}
 	
+	//Funcion que compara la palabra ingresada por el usuario con la elegida por el juego
+	private void comprobarPalabraIngresada(String palabraCompleta, Wordle wordle,JTextField[] filaDeJTextFields)
+	{
+		for(int i = 0; i < 5; i ++) 
+		{
+			if(wordle.estaCharEnMismaPosEnPalabraSecreta(palabraCompleta.charAt(i), i)) 
+			{
+				filaDeJTextFields[i].setBackground(new Color(96, 181, 90));
+				filaDeJTextFields[i].setEnabled(false);
+			}else if(wordle.existeCharEnPalabraSecreta(palabraCompleta.charAt(i))) 
+			{
+				filaDeJTextFields[i].setBackground(new Color(219, 193, 44));
+				filaDeJTextFields[i].setEnabled(false);
+			}else 
+			{
+				filaDeJTextFields[i].setBackground(new Color(132, 132, 132));
+				filaDeJTextFields[i].setEnabled(false);
+			}
+		}
+	}
 	
-//	//Funcion que pasa la comprobacion de la palabra ingresada
-//	private void comprobarPalabra() {
-//		// Llamado a clase Wordle
-//	}
+	// Getters && Setter Palabra Completa
+	public void setPalabraCompleta(String palabraCompetaObtenida) 
+	{
+		palabraCompleta = palabraCompetaObtenida;
+	}
 	
+	public String palabraCompleta() 
+	{
+		return palabraCompleta;
+	}
+
 	//Funcion para insertar campos de texto en interfaz
-	private void insertarFieldsEnInterfaz(JTextField[] cuadrosDeTexto, int localizacionX, int localizacionY) {
+	private void colocacionDeFieldsEnInterfaz(JTextField[] cuadrosDeTexto, int localizacionX, int localizacionY) 
+	{
 		
 		//Ciclo que recorre arrreglo de textField
 		for(int i = 0; i < cuadrosDeTexto.length; i++)
@@ -198,8 +302,13 @@ public class interfazWordle {
 					//Capturando el caracter ingresado en el field
 					if(cuadrosDeTexto[posicion].getText().length() >= 1) 
 					{
-						palabra = obtenerPalabraCompleta(e.getKeyChar(), posicion);
-					
+						
+						palabraCompleta = obtenerPalabraCompleta(e.getKeyChar(), posicion);
+						
+						if(palabraCompleta.length() == 5) 
+						{
+							setPalabraCompleta(palabraCompleta);
+						}
 					}
 					
 					//Moviendo automaticamente al siguiente fild despues de escribir
