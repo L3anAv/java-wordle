@@ -70,6 +70,8 @@ public class interfazWordle {
 		// Inicializando StringBuilder
 		palabraObtenida = new StringBuilder();
  		
+		System.out.println(wordle.getpalabraSecretaElegida());
+		
 		// JLabel de Ganaste
 		JLabel textoGanaste = new JLabel("Ganaste!");
 		textoGanaste.setFont(new Font("Dialog", Font.PLAIN, 14));
@@ -118,7 +120,7 @@ public class interfazWordle {
 		
 	}
 	
-	// Metodo que crea y agrega evento corespondiente a boton
+	// > Metodo que crea y agrega evento corespondiente a boton
 	private JButton crearBotonParaInterfaz(Wordle wordle, JLabel ganasteTexto, JLabel perdisteTexto) 
 	{
 		
@@ -158,8 +160,7 @@ public class interfazWordle {
 					palabraObtenida.setLength(0);
 					palabraCompleta = "";
 					
-				}
-				else
+				}else
 				{
 					
 					JTextField[] cuadrosDeTextoFila = arrayListDeJTextFields.get(intentos);
@@ -176,7 +177,7 @@ public class interfazWordle {
 				}
 				
 				// Controla la cantidad de intentos
-				if(intentos == 5) {
+				if(intentos == 5 && !wordle.ganado(palabraCompleta)) {
 					
 					// Habilita en pantalla el texto de perdiste
 					perdisteTexto.setVisible(true);
@@ -321,18 +322,19 @@ public class interfazWordle {
 				public void keyReleased(KeyEvent e) 
 				{
 					
-					// Cambiando a mayuscula el texto ingresado en los JTextFields
-					String textUpper = cuadrosDeTexto[posicion].getText().toUpperCase();
-					cuadrosDeTexto[posicion].setText(textUpper);
-					
-					
+					// Cambiando a mayuscula el texto ingresado en los JTextFields y comprobando que no se ingresen numeros
+					if(cuadrosDeTexto[posicion].getText().length() >= 1 && !Character.isDigit(cuadrosDeTexto[posicion].getText().toCharArray()[0])) {
+						String textUpper = cuadrosDeTexto[posicion].getText().toUpperCase();
+						cuadrosDeTexto[posicion].setText(textUpper);
+					}else{
+						cuadrosDeTexto[posicion].setText("");
+					}
+				
 					// Capturando el caracter ingresado en cada JTextField
-					if(cuadrosDeTexto[posicion].getText().length() >= 1) 
+					if(cuadrosDeTexto[posicion].getText().length() >= 1 && !Character.isDigit(e.getKeyChar()))
 					{
 						
 						palabraCompleta = obtenerPalabraCompleta(e.getKeyChar(), posicion);
-						
-						System.out.println(palabraCompleta);
 						
 						if(palabraCompleta.length() == 5)
 						{

@@ -9,18 +9,15 @@ public class Wordle {
 	
 	private int intentosJugados;
 	private int cantidadDeIntentosTotales;
-	private char[] charsDePalabraSecreta;	// > Array con chars de la palabra
-	private String palabraSecretaElegida; 	// > Palabra Secreta
-	private Map<Character, Integer> repeticionesDeChars; // > Diccionario con char repetidos las veces que lo estan en palabra < 
-	
+	private char[] charsDePalabraSecreta;
+	private String palabraSecretaElegida; 	
 	
 	 // > Constructor Wordle
 	
 	public Wordle(int cantidadDeIntentos){
 		
-		String[] palabras = {"busto", "burro", "burla", "bucal", "bueno", "dulce", "salud", "bingo", "menta", "drama",
-							 "fumar", "freno", "guiso", "gusto", "guapo", "huevo", "hotel", "jugar", "jarra", "garra"};
-		
+		String[] palabras = {"busto", "burla", "bucal", "bueno", "dulce", "salud", "bingo", "menta", "mucho", "lucha",
+							 "fumar", "freno", "guiso", "gusto", "guapo", "huevo", "hotel", "jugar", "recto", "dogma"};
 		
 		// Inciando lo necesario para el juego.
 		int numeroAleatorio = darUnNumeroParaSeleccionPalabra(palabras.length-1);
@@ -28,9 +25,6 @@ public class Wordle {
 	
 		// Rellenar el array con los chars de palabra secreta elegida.
 		charsDePalabraSecreta = arrayDeCharsDePalabraSecreta(palabraSecretaElegida);
-		
-		// Rellenar el HashMap si hay chars repetidos en la palabra.
-		repeticionesDeChars = rellenarDiccionarConCharRepetidos();
 		
 		// Seteando la cantidad de intentos
 		intentosJugados = 0;
@@ -59,94 +53,17 @@ public class Wordle {
 		return true;
 	}
 	
-	// Metodo que suma un intento a los intentos hechos por el jugador
+	// > Metodo que suma un intento a los intentos hechos por el jugador
 	public void sumarUnIntento()
 	{
 		intentosJugados++;
 	}
 	
-	// Obtiene la cantidad de intentos del jugador
+	// > Metodo que obtiene la cantidad de intentos del jugador
 	public int obtenerCantidadDeIntentos() 
 	{
 		return intentosJugados;
 	}
-	
-	// > Metodo que da un numero aleatorio entre 0 y cantidad total del array de palabras para elegir del juego
-	private int darUnNumeroParaSeleccionPalabra(int cantidadDePalabras) 
-	{
-		
-		Random random = new Random();
-		int numero = random.nextInt(cantidadDePalabras+1);
-		
-		return numero;
-	}
-	
-	// > Crea un array que contiene en cada posicion un char de la palabraSecretaElegida
-	// > Sin test
-	private char[] arrayDeCharsDePalabraSecreta(String palabra) 
-	{
-		char[] caracteres = new char[5];
-		
-		for(int i = 0; i < 5;i++)
-			caracteres[i] = palabra.charAt(i);
-		
-		return caracteres;
-	}
-	
-	// > Rellena el diccionario con chars repetidos de palabraSecretaElegida si los hay y cuantas veces.
-	// > Sin test
-	
-	private Map<Character, Integer> rellenarDiccionarConCharRepetidos() {
-		
-		Map<Character, Integer> repeticionesDeChars = new HashMap<>();
-		Character caracter;
-		Integer numeroDeVeces;
-		
-		for(int i = 0; i < charsDePalabraSecreta.length;i++) 
-		{
-			
-			if(estaRepetidoChar(charsDePalabraSecreta[i])) 
-			{
-				
-				caracter = charsDePalabraSecreta[i];
-				numeroDeVeces = cantidadDeVecesCharRepetido(caracter);
-				
-				System.out.println(caracter + " " + numeroDeVeces + "\n");
-				repeticionesDeChars.put(caracter, numeroDeVeces);
-				
-			}
-		}
-		
-		return repeticionesDeChars;
-		
-	}
-	
-	// > Devuelve true si hay char repetidos en la palabra
-	// > Sin test
-	private boolean estaRepetidoChar(char c) 
-	{
-		
-		boolean estaRepetidoChar = false;
-		
-		if(cantidadDeVecesCharRepetido(c) >= 2)
-			estaRepetidoChar = true;
-
-		return estaRepetidoChar;
-	}
-	
-	// > Devuelve la cantidad de veces que el char esta repetido
-	// > Sin test
-	private int cantidadDeVecesCharRepetido(char c) 
-	{
-		int cantidadDeVeces = 0;
-		
-		for(int i = 0; i < charsDePalabraSecreta.length; i++)
-			if(charsDePalabraSecreta[i] == c)
-				cantidadDeVeces++;
-		
-		return cantidadDeVeces;
-	}
-	
 	
 	// > Metodo que Comprueba si el char pasado está en la misma posicion que en la palabraSecretaElegida
 	public boolean estaCharEnMismaPosEnPalabraSecreta(char c, int posicion) 
@@ -176,6 +93,28 @@ public class Wordle {
 		return existeCharEnPalabraSecreta;
 	}
 	
+	// > Metodo que da un numero aleatorio entre 0 y cantidad total del array de palabras para elegir del juego
+		private int darUnNumeroParaSeleccionPalabra(int cantidadDePalabras) 
+		{
+			
+			Random random = new Random();
+			int numero = random.nextInt(cantidadDePalabras+1);
+			
+			return numero;
+		}
+		
+	// > Crea un array que contiene en cada posicion un char de la palabraSecretaElegida
+	// > Sin test hacerlo
+	private char[] arrayDeCharsDePalabraSecreta(String palabra) 
+	{
+			char[] caracteres = new char[5];
+		
+			for(int i = 0; i < palabra.length();i++)
+				caracteres[i] = palabra.charAt(i);
+			
+			return caracteres;
+	}
+		
 	
 	// > Getters && Setter de: Palabra Secreta Elegida
 	public void setpalabraSecretaElegida(String palabra) {
