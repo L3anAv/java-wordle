@@ -22,9 +22,10 @@ public class interfazWordle {
 	
 	private JFrame frame;
 	private int intentosTotales;
-	private String palabraCompleta;
 	private JLabel textoGanaste;
 	private JLabel perdisteTexto;
+	private JButton botonIngresar;
+	private String palabraCompleta;
 	private StringBuilder palabraObtenida;
 	private ArrayList<JTextField[]> arrayListDeJTextFields;
 	
@@ -92,7 +93,7 @@ public class interfazWordle {
 		perdisteTexto.setVisible(false);
 		
 		// Creando boton para interfaz
-		JButton botonIngresar = crearBotonParaInterfaz(wordle, textoGanaste, perdisteTexto);
+		botonIngresar = crearBotonParaInterfaz(wordle, textoGanaste, perdisteTexto);
 		
 		// Insertar Fields en ArrayList que contiene arrays de fields
  		arrayListDeJTextFields = crearFieldsDeInterfaz(intentosTotales);

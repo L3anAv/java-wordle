@@ -104,7 +104,6 @@ public class Wordle {
 		}
 		
 	// > Crea un array que contiene en cada posicion un char de la palabraSecretaElegida
-	// > Sin test hacerlo
 	private char[] arrayDeCharsDePalabraSecreta(String palabra) 
 	{
 			char[] caracteres = new char[5];
