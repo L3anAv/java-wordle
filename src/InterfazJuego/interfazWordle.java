@@ -23,6 +23,8 @@ public class interfazWordle {
 	private JFrame frame;
 	private int intentosTotales;
 	private String palabraCompleta;
+	private JLabel textoGanaste;
+	private JLabel perdisteTexto;
 	private StringBuilder palabraObtenida;
 	private ArrayList<JTextField[]> arrayListDeJTextFields;
 	
@@ -70,10 +72,11 @@ public class interfazWordle {
 		// Inicializando StringBuilder
 		palabraObtenida = new StringBuilder();
  		
-		System.out.println(wordle.getpalabraSecretaElegida());
+		//Palabra elegida por Wordle.
+		//System.out.println(wordle.getpalabraSecretaElegida());
 		
 		// JLabel de Ganaste
-		JLabel textoGanaste = new JLabel("Ganaste!");
+		textoGanaste = new JLabel("Ganaste!");
 		textoGanaste.setFont(new Font("Dialog", Font.PLAIN, 14));
 		textoGanaste.setForeground(new Color(255, 255, 255));
 		textoGanaste.setBounds(194, 275, 100, 17);
@@ -82,14 +85,14 @@ public class interfazWordle {
 		// JLabel de Perdiste
 		String textoPerdiste = "Perdiste! :( La palabra era: " + wordle.getpalabraSecretaElegida().toUpperCase();
 		int lenghtTexto = textoPerdiste.length();
-		JLabel PerdisteTexto = new JLabel(textoPerdiste);
-		PerdisteTexto.setFont(new Font("Dialog", Font.PLAIN, 12));
-		PerdisteTexto.setForeground(new Color(255, 255, 255));
-		PerdisteTexto.setBounds(170-lenghtTexto, 275, 320+lenghtTexto, 17);
-		PerdisteTexto.setVisible(false);
+		perdisteTexto = new JLabel(textoPerdiste);
+		perdisteTexto.setFont(new Font("Dialog", Font.PLAIN, 12));
+		perdisteTexto.setForeground(new Color(255, 255, 255));
+		perdisteTexto.setBounds(170-lenghtTexto, 275, 320+lenghtTexto, 17);
+		perdisteTexto.setVisible(false);
 		
 		// Creando boton para interfaz
-		JButton botonIngresar = crearBotonParaInterfaz(wordle, textoGanaste, PerdisteTexto);
+		JButton botonIngresar = crearBotonParaInterfaz(wordle, textoGanaste, perdisteTexto);
 		
 		// Insertar Fields en ArrayList que contiene arrays de fields
  		arrayListDeJTextFields = crearFieldsDeInterfaz(intentosTotales);
@@ -104,7 +107,7 @@ public class interfazWordle {
 		// Ingresando elementos en la interfaz
 		frame.getContentPane().add(botonIngresar);
 		frame.getContentPane().add(textoGanaste);
-		frame.getContentPane().add(PerdisteTexto);
+		frame.getContentPane().add(perdisteTexto);
 		
 		
 	}
