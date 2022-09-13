@@ -13,7 +13,7 @@ public class wordleTest {
 	@Before
 	public void wordleInitial() 
 	{
-		wordle = new Wordle();
+		wordle = new Wordle(6);
 	}
 	
 	@Test

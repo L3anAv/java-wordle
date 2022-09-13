@@ -7,48 +7,71 @@ import java.util.Random;
 
 public class Wordle {
 	
+	private int intentosJugados;
+	private int cantidadDeIntentosTotales;
 	private char[] charsDePalabraSecreta;	// > Array con chars de la palabra
 	private String palabraSecretaElegida; 	// > Palabra Secreta
 	private Map<Character, Integer> repeticionesDeChars; // > Diccionario con char repetidos las veces que lo estan en palabra < 
 	
 	
-	/**
-	 * > caso de evaluacion
-	 * "anana" 
-	 * "lacra"
-	 * 
-	 * 
-	 * Constructor Wordle
-	 * */
-	public Wordle(){
+	 // > Constructor Wordle
+	
+	public Wordle(int cantidadDeIntentos){
+		
 		String[] palabras = {"busto", "burro", "burla", "bucal", "bueno", "dulce", "salud", "bingo", "menta", "drama",
 							 "fumar", "freno", "guiso", "gusto", "guapo", "huevo", "hotel", "jugar", "jarra", "garra"};
 		
 		
-		// > Inciando lo necesario para el juego.
+		// Inciando lo necesario para el juego.
 		int numeroAleatorio = darUnNumeroParaSeleccionPalabra(palabras.length-1);
 		palabraSecretaElegida = palabras[numeroAleatorio].toLowerCase();
-		
-		// > Rellenar el array con los chars de palabra secreta elegida.
+	
+		// Rellenar el array con los chars de palabra secreta elegida.
 		charsDePalabraSecreta = arrayDeCharsDePalabraSecreta(palabraSecretaElegida);
 		
-		// > Rellenar el HashMap si hay chars repetidos en la palabra.
+		// Rellenar el HashMap si hay chars repetidos en la palabra.
 		repeticionesDeChars = rellenarDiccionarConCharRepetidos();
-		//System.out.println("\n" + repeticionesDeChars.toString());
+		
+		// Seteando la cantidad de intentos
+		intentosJugados = 0;
+		
+		// Cantidad de intentos Totales
+		this.cantidadDeIntentosTotales = cantidadDeIntentos;
 		
 	}
 	
-	// > Declara si se gano el juego o no
+	// > Metodo que retorna si se gano el juego
 	public boolean ganado(String palabraUsuario) 
 	{
 		
-		if(palabraUsuario.equals(palabraSecretaElegida)) 
+		if(palabraUsuario.equals(palabraSecretaElegida) && quedanIntentos()) 
 			return true;
-		
-		return false;
+		else
+			return false;
 	}
 	
-	// > Da un numero aleatorio entre 0 y cantidad de palabras del array palabras.
+	// > Metodo que controla si quedan intentos disponibles
+	public boolean quedanIntentos() 
+	{
+		if(intentosJugados == cantidadDeIntentosTotales)
+			return false;
+		
+		return true;
+	}
+	
+	// Metodo que suma un intento a los intentos hechos por el jugador
+	public void sumarUnIntento()
+	{
+		intentosJugados++;
+	}
+	
+	// Obtiene la cantidad de intentos del jugador
+	public int obtenerCantidadDeIntentos() 
+	{
+		return intentosJugados;
+	}
+	
+	// > Metodo que da un numero aleatorio entre 0 y cantidad total del array de palabras para elegir del juego
 	private int darUnNumeroParaSeleccionPalabra(int cantidadDePalabras) 
 	{
 		
@@ -94,12 +117,9 @@ public class Wordle {
 			}
 		}
 		
-		//repeticionesDeChars.put('c', 12);
-		
 		return repeticionesDeChars;
 		
 	}
-	
 	
 	// > Devuelve true si hay char repetidos en la palabra
 	// > Sin test
@@ -128,7 +148,7 @@ public class Wordle {
 	}
 	
 	
-	// > Comprueba si char c esta en la misma posicion que en la palabraSecretaElegida
+	// > Metodo que Comprueba si el char pasado está en la misma posicion que en la palabraSecretaElegida
 	public boolean estaCharEnMismaPosEnPalabraSecreta(char c, int posicion) 
 	{
 		boolean existeCharEnMismaPos = false;
@@ -138,12 +158,9 @@ public class Wordle {
 		
 		return existeCharEnMismaPos;
 	}
-	
-		
-	// > Tener en cuenta cuantas veces esta repetida esa letra en la palabra, se podria dar que existe 
-	// y marcar de  amarillo una letra que no existe tantas veces en la palabraSecretaElegida.
 
-	// > Si char pertenece a la palabra sin importa la posicion.
+	
+	// > Metodo que dice si char pertenece a la palabra sin tener en cuenta la posicion.
 	public boolean existeCharEnPalabraSecreta(char c)
 	{
 		int i = 0;
@@ -159,7 +176,8 @@ public class Wordle {
 		return existeCharEnPalabraSecreta;
 	}
 	
-	// > Getters y Setters
+	
+	// > Getters && Setter de: Palabra Secreta Elegida
 	public void setpalabraSecretaElegida(String palabra) {
 		this.palabraSecretaElegida = palabra;
 	}
